@@ -1,5 +1,6 @@
 # api-tutorial
 Simple API using NodeJS, Express, and PostGres
+Following this tutorial: https://www.freecodecamp.org/news/learn-the-pern-stack-full-course/
 
 Specification:
 ```
