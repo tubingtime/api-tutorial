@@ -1,7 +1,9 @@
 # api-tutorial
-Simple API using NodeJS, Express, and PostGres
+Simple API using NodeJS, Express, and PostGres with the help of Typescript and Docker.
 
-Following this tutorial: https://www.freecodecamp.org/news/learn-the-pern-stack-full-course/
+For Typescript and Docker Setup I followed this tutorial: https://dev.to/chandrapantachhetri/docker-postgres-node-typescript-setup-47db
+
+For setting up the todo database: https://www.freecodecamp.org/news/learn-the-pern-stack-full-course/
 
 Specification:
 ```
