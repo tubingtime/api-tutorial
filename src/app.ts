@@ -27,6 +27,6 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
     res.send("hi guy");
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running at ${process.env.PORT}`);
+app.listen(process.env.API_PORT, () => {
+    console.log(`Server is running at ${process.env.API_PORT}`);
 });
