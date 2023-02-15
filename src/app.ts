@@ -32,6 +32,10 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
     res.send("hi guy");
 });
 
+// Create new todo list 
+// TODO: rewrite using sarah's schema
+
+// Insert new todo item 
 app.post("/todos", async (req, res) => {
     try {
         const description = req.body.description;

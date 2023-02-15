@@ -39,6 +39,8 @@ connectToDB();
 app.get("/test", (req, res, next) => {
     res.send("hi guy");
 });
+// Create new todo list 
+// Insert new todo item 
 app.post("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const description = req.body.description;
