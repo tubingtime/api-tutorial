@@ -5,6 +5,28 @@ For Typescript and Docker Setup I followed this tutorial: https://dev.to/chandra
 
 For setting up the todo database: https://www.freecodecamp.org/news/learn-the-pern-stack-full-course/
 
+## Installation
+
+Docker Desktop must be installed first: https://www.docker.com/products/docker-desktop/
+
+
+1. Install dependencies: `npm install`
+2. Edit the .env file and change the password (password is set on first run):
+3. Run:
+    `docker-compose up`
+
+## Useful postgres commands
+Connect to local database using postgress command line tool:
+
+`psql -h <ip> -p <port> -U <username> -d <database>`
+
+List all databases: `\l`
+
+Move inside databases: `\c`
+
+Show table in databases: `\dt`
+
+
 Specification:
 ```
 Node.js API (First Week)
