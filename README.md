@@ -11,7 +11,16 @@ Docker Desktop must be installed first: https://www.docker.com/products/docker-d
 
 
 1. Install dependencies: `npm install`
-2. Edit the .env file and change the password (password is set on first run):
+2. Create a .env with the following and change the password (password is set on first run):
+```
+API_PORT=5000
+
+DB_HOST='localhost'
+DB_USER='postgres'
+DB_NAME='todo_db'
+DB_PASSWORD='YOUR_PASSWORD_HERE'
+DB_PORT=5432
+```
 3. Run:
     `docker-compose up`
 
