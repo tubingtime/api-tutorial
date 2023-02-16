@@ -21,19 +21,60 @@ const pool = new Pool({
 const connectToDB = async () => {
     try {
         await pool.connect();
+        console.log("DB Connection Established!")
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 };
 connectToDB();
 
+async function setupSchema(){
+    try {
+        let sqlLists: string = `CREATE TABLE IF NOT EXISTS Lists (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL
+        );`
+        let sqlItems: string = `CREATE TABLE IF NOT EXISTS Items (
+            id SERIAL PRIMARY KEY,
+            list_id INT NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            completed BOOLEAN DEFAULT FALSE,
+            FOREIGN KEY (list_id) REFERENCES Lists(id)
+        );`
+        await pool.query(sqlLists);
+        await pool.query(sqlItems);
+    } catch (err: any){
+        console.error(err.message);
+    }
+}
 
-app.get("/test", (req: Request, res: Response, next: NextFunction) => {
-    res.send("hi guy");
-});
+
+// TODO: rewrite using sarah's schema
+// TODO: Create schema if not exists
+
+
+
+/**
+ * Display a message on the home page.
+ */
+app.get("/", async (req, res) => {
+    try {
+        res.end("<h1> This is the TODO API</h1>");
+    } catch (err: any) {
+        console.error(err.message);
+    }
+})
 
 // Create new todo list 
-// TODO: rewrite using sarah's schema
+app.post("/lists", async (req, res) => {
+    try {
+        const name = req.body.name;
+        const newList = await pool.query("INSERT INTO Lists (name) VALUES($1) RETURNING *", [name]);
+        res.json(newList.rows[0]);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+})
 
 // Insert new todo item 
 app.post("/todos", async (req, res) => {

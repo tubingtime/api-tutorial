@@ -30,16 +30,59 @@ const pool = new pg_1.Pool({
 const connectToDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield pool.connect();
+        console.log("DB Connection Established!");
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
     }
 });
 connectToDB();
-app.get("/test", (req, res, next) => {
-    res.send("hi guy");
-});
+function setupSchema() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let sqlLists = `CREATE TABLE Lists (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL
+        );`;
+            let sqlItems = `CREATE TABLE Items (
+            id SERIAL PRIMARY KEY,
+            list_id INT NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            completed BOOLEAN DEFAULT FALSE,
+            FOREIGN KEY (list_id) REFERENCES Lists(id)
+        );`;
+            yield pool.query(sqlLists);
+            yield pool.query(sqlItems);
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    });
+}
+// TODO: rewrite using sarah's schema
+// TODO: Create schema if not exists
+/**
+ * Display a message on the home page.
+ */
+app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.end("<h1> This is the TODO API</h1>");
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+}));
 // Create new todo list 
+app.post("/lists", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const name = req.body.name;
+        const newList = yield pool.query("INSERT INTO Lists (name) VALUES($1) RETURNING *", [name]);
+        res.json(newList.rows[0]);
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+}));
 // Insert new todo item 
 app.post("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
