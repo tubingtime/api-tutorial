@@ -15,7 +15,7 @@ Docker Desktop must be installed first: https://www.docker.com/products/docker-d
 ```
 API_PORT=5000
 
-DB_HOST='localhost'
+DB_HOST='db'
 DB_USER='postgres'
 DB_NAME='todo_db'
 DB_PASSWORD='YOUR_PASSWORD_HERE'
