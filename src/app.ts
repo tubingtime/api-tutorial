@@ -15,7 +15,7 @@ const pool = new Pool({
     user: process.env.DB_USER,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    port: parseInt(process.env.DB_PORT || "5432")
+    port: parseInt(process.env.DB_PORT || "5433")
 })
 
 const connectToDB = async () => {
@@ -47,12 +47,13 @@ async function setupSchema(){
         console.error(err.message);
     }
 }
+setupSchema();
 
 
 /**
  * Displays a message on the home page.
  */
- app.get("/", async (req, res) => {
+app.get("/", async (req, res) => {
     try {
         res.end("Welcome to TODO list");
     } catch (err: any) {
@@ -157,10 +158,8 @@ app.get("/items/id/:id", async (req, res) => {
 app.delete("/items/id/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const deleteTodoItem = await pool.query("DELETE FROM items WHERE id = $1", [
-            id: any
-        ]);
-        res.json("TodoItem was deleted!");
+        const deleteTodoItem = await pool.query("DELETE FROM items WHERE id = $1 RETURNING *", [id]);
+        res.json(`TodoItem: ${deleteTodoItem} was deleted!`);
     } catch (err: any) {
         console.log(err.message);
     }
