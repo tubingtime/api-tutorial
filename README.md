@@ -27,7 +27,11 @@ DB_PORT=5432
 ## Useful postgres commands
 Connect to local database using postgress command line tool:
 
-`psql -h <ip> -p <port> -U <username> -d <database>`
+`psql -h <ip or hostname> -p <DB_PORT> -U <username> -d <database>`
+
+If you are using the default values:
+
+`psql -h localhost -p 5433 -U postgres -d todo_db`
 
 List all databases: `\l`
 
