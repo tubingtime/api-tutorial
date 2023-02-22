@@ -4,24 +4,28 @@ const InputTodo = () => {
     const [description, setDescription] = useState("");
     const [listId, setListId] = useState("");
 
-    const onSubmitForm = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmitForm = async (formEvent: React.FormEvent) => {
+        formEvent.preventDefault();
         try {
             const body = { description } // we use brackets around a string to make it an object/json
             console.log(body);
-            const response = await fetch(`http://localhost:5000/lists/${listId}`)
+            const response = await fetch(`http://localhost:5000/lists/${listId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            console.log(response);
         } catch (err) {
-            
+            console.error(err);
         }
-
     }
 
     return (
         <Fragment>
-            <h1 className="text-center"> Input New Todo Item</h1>
+            <h2 className="text-center"> Input New Todo Item</h2>
             <form className="flex mt-5 justify-center" onSubmit={onSubmitForm}>
-                <div>
-                    <label className="">
+                <div className="self-center">
+                    <label>
                         List ID
                     </label>
                     <input
@@ -32,7 +36,7 @@ const InputTodo = () => {
                     />
                 </div>
                 
-                <div>
+                <div className="self-center">
                     <label>
                         Description
                     </label>
@@ -43,7 +47,9 @@ const InputTodo = () => {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
                     />
                 </div>
-                <button className="bg-blue-400 hover:bg-blue-800 text-white font-bold rounded">Add</button>
+                <div>
+                    <button className="bg-blue-400 hover:bg-blue-800 text-white font-bold rounded">Add</button>
+                </div>
             </form>
         </Fragment>
     );

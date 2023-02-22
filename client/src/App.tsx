@@ -3,12 +3,21 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 
 import InputTodo from "./components/InputTodo";
+import CreateTodoList from "./components/CreateTodoList";
+import ListTodos from "./components/ListTodos";
 
 function App() {
   return (
     <React.Fragment>
-      <div className="container">
+      <h2>🌱🌱🌱🌱🌱</h2>
+      <div className="container my-5 align-top">
+        <ListTodos />
+      </div>
+      <div className="container my-5">
         <InputTodo />
+      </div>
+      <div className="container my-5">
+        <CreateTodoList />
       </div>
     </React.Fragment>
   );
