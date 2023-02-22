@@ -27,7 +27,7 @@ const connectToDB = async () => {
     }
 };
 connectToDB();
-
+// TODO: were gonna want to only allow unique list names 
 async function setupSchema(){
     try {
         let sqlLists: string = `CREATE TABLE IF NOT EXISTS Lists (
@@ -52,10 +52,11 @@ setupSchema();
 
 /**
  * Displays a message on the home page.
+ * This would be nice as a redirect to the README. Or just return the readme.
  */
 app.get("/", async (req, res) => {
     try {
-        res.end("Welcome to TODO list");
+        res.end("Welcome to TODO list API");
     } catch (err: any) {
         console.error(err.message);
     }
