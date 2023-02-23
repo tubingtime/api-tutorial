@@ -18,15 +18,18 @@ const pool = new Pool({
     port: parseInt(process.env.DB_PORT || "5433")
 })
 
-const connectToDB = async () => {
+async function connectToDB(retries: number) {
     try {
         await pool.connect();
         console.log("DB Connection Established!")
     } catch (err) {
         console.error(err);
+        if (retries > 0){
+            setTimeout(connectToDB, 2000, retries-1);
+        }
     }
 };
-connectToDB();
+connectToDB(1);
 // TODO: were gonna want to only allow unique list names 
 async function setupSchema(){
     try {
