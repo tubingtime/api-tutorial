@@ -7,46 +7,44 @@ function classNames(...classes: Array<String>) {
 }
 
 const ListTodos = () => {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodoLists] = useState([]);
 
     //delete todo function
 
-    const deleteTodo = async (id: string) => {
+    const deleteTodoList = async (id: string) => {
         try {
             const deleteTodo = await fetch(`http://localhost:5000/lists/id/${id}`, {
                 method: "DELETE"
             });
 
-            setTodos(todos.filter((todo: any) => todo.id !== id));
+            setTodoLists(todos.filter((todo: any) => todo.id !== id));
         } catch (err) {
             console.error(err);
         }
     };
 
-    const getTodoItems = async () => {
+    const getTodoLists = async () => {
         try {
             const response = await fetch("http://localhost:5000/lists");
             console.log("get Todos: response:");
             console.log(response);
             const jsonData = await response.json();
-            setTodos(jsonData);
+            setTodoLists(jsonData);
         } catch (err) {
             console.error(err);
         }
     };
 
     useEffect(() => {
-        getTodos();
+        getTodoLists();
     }, []);
-
-    console.log('todos:' + todos);
 
     return (
         <Fragment>
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                        Options
+                        Select A Todo List
                     </Menu.Button>
                 </div>
 
@@ -80,44 +78,6 @@ const ListTodos = () => {
                     </Menu.Items>
                 </Transition>
             </Menu>
-
-
-
-
-
-
-            <table className="table mt-5 text-center">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>View</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/*<tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr> */}
-                    {todos.map((todo: any) => (
-                        <tr key={todo.id}>
-                            <td>{todo.name}</td>
-                            <td>
-                                View Todo
-                            </td>
-                            <td>
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={() => deleteTodo(todo.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
         </Fragment>
     );
 };
