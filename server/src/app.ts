@@ -105,7 +105,7 @@ app.get("/lists", async (req, res) => {
 })
 
 /**
- * Get all TodoTtems in a TodoList by list_id.
+ * Get all TodoItems in a TodoList by list_id.
  */
 app.get("/lists/id/:list_id", async (req, res) => {
     try {
