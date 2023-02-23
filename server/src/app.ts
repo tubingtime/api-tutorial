@@ -133,6 +133,7 @@ app.get("/lists/name/:list_name", async (req, res) => {
 /**
  * Updates a TodoItem and marks it as done.
  */
+//TODO: Make this toggle?
 app.put("/items/id/:id", async (req, res) => {
     try {
         const { id } = req.params;

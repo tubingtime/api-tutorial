@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from '@headlessui/react'
 
-
 function classNames(...classes: Array<String>) {
     return classes.filter(Boolean).join(' ')
 }
@@ -9,15 +8,19 @@ function classNames(...classes: Array<String>) {
 const ListTodos = () => {
     const [todos, setTodoLists] = useState([]);
 
+    const siteUrl = window.location.search;
+    const urlParams = new URLSearchParams(siteUrl);
+    //TODO: change
+    let listId: string = "19"
+
     //delete todo function
 
     const deleteTodoList = async (id: string) => {
         try {
-            const deleteTodo = await fetch(`http://localhost:5000/lists/id/${id}`, {
+            const deleteTodo = await fetch(`http://localhost:5000/items/id/${id}`, {
                 method: "DELETE"
             });
-
-            setTodoLists(todos.filter((todo: any) => todo.id !== id));
+            getTodoLists();
         } catch (err) {
             console.error(err);
         }
@@ -78,6 +81,14 @@ const ListTodos = () => {
                     </Menu.Items>
                 </Transition>
             </Menu>
+            <div>
+                <button
+                    className="btn btn-danger"
+                    onClick={() => deleteTodoList(listId)}
+                >
+                    Delete
+                </button>
+            </div>
         </Fragment>
     );
 };

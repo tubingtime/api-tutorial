@@ -16,12 +16,22 @@ const ListTodoItems = () => {
 
     //delete todo function
 
+    const handleCheckBoxChange = async (id: string) => {
+        try {
+            const markDone = await fetch(`http://localhost:5000/items/id/${id}`, {
+                method: "PUT"
+            });
+            location.reload();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const deleteTodoItem = async (id: string) => {
         try {
             const deleteTodo = await fetch(`http://localhost:5000/items/id/${id}`, {
                 method: "DELETE"
             });
-
             getTodoItems();
         } catch (err) {
             console.error(err);
@@ -39,7 +49,8 @@ const ListTodoItems = () => {
             console.error(err);
         }
     };
-
+    
+    //TODO: add hook for Input todo item 
     useEffect(() => {
         getTodoItems();
     }, []);
@@ -62,7 +73,7 @@ const ListTodoItems = () => {
                 </tr> */}
                     {todos.map((todo: any) => (
                         <tr key={todo.id}>
-                            <td>{todo.completed.toString()}</td>
+                            <td><input type="checkbox" checked={todo.completed} onChange={()=> handleCheckBoxChange} /></td>
                             <td>{todo.description}</td>
                             <td>
                                 <button
