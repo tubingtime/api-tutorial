@@ -3,15 +3,26 @@ import React, { Fragment, useEffect, useState } from "react";
 const ListTodoItems = () => {
     const [todos, setTodos] = useState([]);
 
+    const siteUrl = window.location.search;
+    const urlParams = new URLSearchParams(siteUrl);
+    const listId = urlParams.get('list_id');
+
+    
+
+    //TODO: sanitize user input
+    console.log("params:");
+    console.log(listId);
+    
+
     //delete todo function
 
     const deleteTodoItem = async (id: string) => {
         try {
-            const deleteTodo = await fetch(`http://localhost:5000/lists/id/${id}`, {
+            const deleteTodo = await fetch(`http://localhost:5000/items/id/${id}`, {
                 method: "DELETE"
             });
 
-            setTodos(todos.filter((todo: any) => todo.id !== id));
+            getTodoItems();
         } catch (err) {
             console.error(err);
         }
@@ -19,7 +30,7 @@ const ListTodoItems = () => {
 
     const getTodoItems = async () => {
         try {
-            const response = await fetch("http://localhost:5000/lists");
+            const response = await fetch(`http://localhost:5000/lists/id/${listId}`);
             console.log("get Todos: response:");
             console.log(response);
             const jsonData = await response.json();
@@ -38,8 +49,8 @@ const ListTodoItems = () => {
             <table className="table mt-5">
                 <thead>
                     <tr>
-                        <th>Description</th>
-                        <th>View</th>
+                        <th>Completed</th>
+                        <th className=" px-5">Description</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -51,10 +62,8 @@ const ListTodoItems = () => {
                 </tr> */}
                     {todos.map((todo: any) => (
                         <tr key={todo.id}>
-                            <td>{todo.name}</td>
-                            <td>
-                                View Todo
-                            </td>
+                            <td>{todo.completed.toString()}</td>
+                            <td>{todo.description}</td>
                             <td>
                                 <button
                                     className="btn btn-danger"

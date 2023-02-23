@@ -8,7 +8,6 @@ const CreateTodoList = () => {
         try {
             console.log("Creating new todo list...");
             const body = { name: listName };
-            console.log(body);
             const response = await fetch(`http://localhost:5000/lists`,{
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

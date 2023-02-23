@@ -9,12 +9,13 @@ const InputTodo = () => {
         try {
             const body = { description } // we use brackets around a string to make it an object/json
             console.log(body);
-            const response = await fetch(`http://localhost:5000/lists/${listId}`, {
+            const response = await fetch(`http://localhost:5000/lists/id/${listId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
             console.log(response);
+            location.reload();
         } catch (err) {
             console.error(err);
         }

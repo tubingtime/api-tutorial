@@ -61,18 +61,18 @@ const ListTodos = () => {
                         <div className="py-1">
                             {todos.map((todo: any) => (
                                 <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        {todo.name}
-                                    </a>
-                                )}
-                            </Menu.Item>
+                                    {({ active }) => (
+                                        <a
+                                            href={"/?list_id=" + todo.id}
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block w-full px-4 py-2 text-left text-sm'
+                                            )}
+                                        >
+                                            {todo.name}
+                                        </a>
+                                    )}
+                                </Menu.Item>
                             ))}
                         </div>
                     </Menu.Items>
